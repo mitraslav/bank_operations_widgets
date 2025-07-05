@@ -6,8 +6,11 @@ def mask_account_card(user_data: str) -> str:
     user_data_list = user_data.split()
     numbers_from_data = int(user_data_list[-1])
     if "Счет" in user_data_list:
-        return get_mask_account(numbers_from_data)
-    return get_mask_card_number(numbers_from_data)
+        masked_account = get_mask_account(numbers_from_data)
+        return "Счет " + masked_account
+    card_name = ' '.join(user_data_list[:-1])
+    masked_card = get_mask_card_number(numbers_from_data)
+    return f'{card_name} {masked_card}'
 
 
 def get_date(date_info: str) -> str:
