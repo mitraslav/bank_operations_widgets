@@ -8,9 +8,9 @@ def mask_account_card(user_data: str) -> str:
     if "Счет" in user_data_list:
         masked_account = get_mask_account(numbers_from_data)
         return "Счет " + masked_account
-    card_name = ' '.join(user_data_list[:-1])
+    card_name = " ".join(user_data_list[:-1])
     masked_card = get_mask_card_number(numbers_from_data)
-    return f'{card_name} {masked_card}'
+    return f"{card_name} {masked_card}"
 
 
 def get_date(date_info: str) -> str:
