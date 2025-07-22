@@ -32,9 +32,9 @@ def test_invalid_card_numbers(invalid_card_number):
     "account_number, expected",
     [
         ("12345678901234567890", "**7890"),
-        ("12345678", "**5678"),
-        ("12", "**12"),
-        ("", "**"),
+        ("12345678", "**5678"),  # Короткий номер
+        ("12", "**12"),  # Очень короткий номер
+        ("", "**"),  # Пустая строка
     ],
 )
 def test_get_mask_account(account_number, expected):
