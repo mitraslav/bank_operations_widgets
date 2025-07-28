@@ -30,3 +30,31 @@ def test_filter_by_currency_no_matching(transactions):
     eur_transactions = filter_by_currency(transactions, "EUR")
     with pytest.raises(StopIteration):
         next(eur_transactions)
+
+
+def test_transaction_descriptions(transactions):
+    descriptions = transaction_descriptions(transactions)
+    assert next(descriptions) == "Перевод организации"
+    assert next(descriptions) == "Перевод со счета на счет"
+    assert next(descriptions) == "Перевод со счета на счет"
+    assert next(descriptions) == "Перевод с карты на карту"
+    assert next(descriptions) == "Перевод организации"
+    with pytest.raises(StopIteration):
+        next(descriptions)
+
+
+def test_transaction_descriptions_empty_list():
+    empty_transactions = transaction_descriptions([])
+    with pytest.raises(StopIteration):
+        next(empty_transactions)
+
+
+def test_transaction_descriptions_no_description(incomplete_transactions):
+    no_descriptions = transaction_descriptions(incomplete_transactions)
+    assert next(no_descriptions) == "У операции отсутствует описание!"
+    assert next(no_descriptions) == "У операции отсутствует описание!"
+    assert next(no_descriptions) == "У операции отсутствует описание!"
+    assert next(no_descriptions) == "У операции отсутствует описание!"
+    assert next(no_descriptions) == "Перевод организации"
+    with pytest.raises(StopIteration):
+        next(no_descriptions)
