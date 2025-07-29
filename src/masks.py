@@ -10,6 +10,6 @@ def get_mask_card_number(card_number: int) -> str:
 
 
 def get_mask_account(account_number: int) -> str:
-    """Функция принимает номер карты и возвращает маску номера по правилу **XXXX"""
+    """Функция принимает номер счета и возвращает маску номера по правилу **XXXX"""
     account_number_str = str(account_number)
     return f"**{account_number_str[-4:]}"
