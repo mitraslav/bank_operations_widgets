@@ -49,13 +49,27 @@ def test_transaction_descriptions_empty_list():
         next(empty_transactions)
 
 
-def test_transaction_descriptions_no_description(incomplete_transactions):
+@pytest.mark.parametrize(
+    "index, expected",
+    [
+        (0, "У операции отсутствует описание!"),
+        (1, "У операции отсутствует описание!"),
+        (2, "У операции отсутствует описание!"),
+        (3, "У операции отсутствует описание!"),
+        (4, "Перевод организации"),
+    ],
+)
+def test_transaction_descriptions_no_description(incomplete_transactions, index, expected):
     no_descriptions = transaction_descriptions(incomplete_transactions)
-    assert next(no_descriptions) == "У операции отсутствует описание!"
-    assert next(no_descriptions) == "У операции отсутствует описание!"
-    assert next(no_descriptions) == "У операции отсутствует описание!"
-    assert next(no_descriptions) == "У операции отсутствует описание!"
-    assert next(no_descriptions) == "Перевод организации"
+    for _ in range(index):
+        next(no_descriptions)
+    assert next(no_descriptions) == expected
+
+
+def test_transaction_descriptions_stop_iter(incomplete_transactions):
+    no_descriptions = transaction_descriptions(incomplete_transactions)
+    for _ in range(5):
+        next(no_descriptions)
     with pytest.raises(StopIteration):
         next(no_descriptions)
 
