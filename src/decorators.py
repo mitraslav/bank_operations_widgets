@@ -6,6 +6,7 @@ T = TypeVar("T")
 
 
 def log(filename: Optional[str] = None) -> Callable[[Callable[..., T]], Callable[..., Optional[T]]]:
+    """Регистрирует детали выполнения функций и сохраняет их в новом файле или в консоли"""
     def wrapper(func: Callable[..., T]) -> Callable[..., Optional[T]]:
         @wraps(func)
         def inner(*args: Any, **kwargs: Any) -> Optional[T]:
