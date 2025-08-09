@@ -97,3 +97,39 @@ def incomplete_transactions():
             "to": "Счет 14211924144426031657",
         },
     ]
+
+
+@pytest.fixture
+def utils_data():
+    return [
+        {
+            "id": 4,
+            "state": "EXECUTED",
+            "date": "2019-08-26T10:50:58.294041",
+            "operationAmount": {"amount": "31", "currency": {"name": "руб.", "code": "RUB"}},
+        },
+        {"id": 4, "state": "EXECUTED", "date": "2019-08-26T10:50:58.294041"},
+    ]
+
+
+@pytest.fixture
+def convert_eur():
+    return """{
+  "date": "2025-08-04",
+  "info": {
+    "rate": 92.495872,
+    "timestamp": 1754322544
+  },
+  "query": {
+    "amount": 100,
+    "from": "EUR",
+    "to": "RUB"
+  },
+  "result": 9000.45,
+  "success": true
+}"""
+
+
+@pytest.fixture
+def single_transaction():
+    return {"operationAmount": {"amount": "100.00", "currency": {"code": "EUR"}}}
