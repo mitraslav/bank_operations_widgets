@@ -1,6 +1,5 @@
-from src.transaction_utils import process_bank_search
+from src.transaction_utils import process_bank_search, process_bank_operations
 import pytest
-from unittest.mock import patch
 
 def test_process_bank_search(incomplete_transactions):
     expected_result = [{
@@ -27,5 +26,26 @@ def test_process_bank_search_exception():
     invalid_data = [{"description": None}]
     with pytest.raises(Exception) as exc_info:
         process_bank_search(invalid_data, "hello")
-    assert "Ошибка при чтении файла" in str(exc_info.value)
+    assert "Ошибка при чтении данных" in str(exc_info.value)
+
+def test_process_bank_operations(transactions):
+    expected_result = {"Перевод организации": 2,
+                        "Перевод со счета на счет": 2
+                        }
+    assert process_bank_operations(transactions, ["Перевод организации", "Перевод со счета на счет"]) == expected_result
+
+
+def test_process_bank_operations_empty():
+    with pytest.raises(ValueError, match='Data or categories parameter is absent'):
+        process_bank_operations([], ['hello'])
+    with pytest.raises(ValueError, match='Data or categories parameter is absent'):
+        process_bank_operations([{'hello': '1'}], [])
+    with pytest.raises(ValueError, match='Data or categories parameter is absent'):
+        process_bank_operations([], [])
+
+def test_process_bank_operations_exception():
+    invalid_data = {"description": None}
+    with pytest.raises(Exception) as exc_info:
+        process_bank_operations(invalid_data, ['hello'])
+    assert "Ошибка при чтении данных" in str(exc_info.value)
 
