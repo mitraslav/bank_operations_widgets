@@ -12,7 +12,7 @@ def test_read_operations_from_json(utils_data):
 
 
 def test_read_operations_from_json_wrong_input():
-    assert read_operations_from_json(("")) == []
+    assert read_operations_from_json("") == []
 
     with patch("builtins.open", mock_open()):
         with patch("json.load", return_value={"key": "value"}):
